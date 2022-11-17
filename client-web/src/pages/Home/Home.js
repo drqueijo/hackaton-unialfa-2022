@@ -47,6 +47,7 @@ function Home() {
         <div className="home__characters__list">
           {characters.results.map((character) => (
             <CharacterCard
+              id={character.id}
               name={character.name}
               image={character.image}
               status={character.status}

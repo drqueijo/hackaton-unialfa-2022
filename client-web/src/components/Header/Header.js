@@ -1,10 +1,10 @@
 import React from 'react'
 import './Header.css'
-import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
 
-  const history = useLocation()
+  const history = useNavigate()
   return (
     <header className="header">
       <img className="header__logo" alt="logo" src="/assets/logo.png" onClick={() => history('/')} />
