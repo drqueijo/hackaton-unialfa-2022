@@ -62,6 +62,7 @@ function Home() {
         {characters.info.prev && ( 
           <Button onClick={() => apiRequest(requestPage - 1)} variant="secondary">Previous page</Button>
         )}
+        {requestPage}
         {characters.info.next && ( 
           <Button onClick={() => apiRequest(requestPage + 1)} variant="light">Next page</Button>
         )}    
