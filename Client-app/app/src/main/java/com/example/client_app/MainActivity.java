@@ -107,15 +107,15 @@ public class MainActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         //carregando os dados do item selecionado na lista pelo index
-        HashMap<String, String> pokebola =  listaDados.get(position);
+        HashMap<String, String> personagem =  listaDados.get(position);
 
         //criando o caminho para abrir a tela de detalhes
         Intent telaDetalhes = new Intent(MainActivity.this, DetalhesActivity.class);
 
         //criando os parametros e adicionando os dados do item selecionado
         Bundle params = new Bundle();
-        params.putString("name", pokebola.get("name"));
-        params.putString("imagem", pokebola.get("imagem"));
+        params.putString("name", personagem.get("name"));
+        params.putString("imagem", personagem.get("imagem"));
         //adicionando os parametros no caminho de tela
         telaDetalhes.putExtras(params);
 

@@ -12,6 +12,7 @@ import com.example.client_app.datasources.DownloadImagem;
 public class DetalhesActivity extends AppCompatActivity {
 
     TextView nome;
+    TextView status;
     ImageView imagem;
 
     @Override
@@ -21,6 +22,7 @@ public class DetalhesActivity extends AppCompatActivity {
 
         nome = findViewById(R.id.nome);
         imagem = findViewById(R.id.imagem);
+        status = findViewById(R.id.status);
 
         //capturando o caminho de tela utilizado para abrir esta tela
         Intent dadosRecebidos = getIntent();
@@ -30,7 +32,7 @@ public class DetalhesActivity extends AppCompatActivity {
             if (params != null) {
                 //adicionando o nome do pokemon no texto da tela
                 nome.setText(params.getString("name"));
-
+                status.setText(params.getString("status"));
                 //carregando a imagem da web no objeto imagem da tela
                 new DownloadImagem(imagem).execute(params.getString("imagem"));
             }
