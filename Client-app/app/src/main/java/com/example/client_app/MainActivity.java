@@ -3,6 +3,7 @@ package com.example.client_app;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -34,7 +35,7 @@ public class MainActivity extends ListActivity {
         Intent dadosRecebidos = getIntent();
 
         if (dadosRecebidos != null) {
-            //capturando os dados recebidos no caminho de tela
+
             Bundle params = dadosRecebidos.getExtras();
             if (params != null) {
                 id = params.getString("id");
@@ -51,12 +52,21 @@ public class MainActivity extends ListActivity {
                 }
                 Intent telaDetalhes = new Intent(MainActivity.this, MainActivity.class);
 
-                //criando os parametros e adicionando os dados do item selecionado
+
                 Bundle params = new Bundle();
-                params.putString("id", "1");
-                //adicionando os parametros no caminho de tela
+                if(id != null) {
+                    int pageInt =  Integer.parseInt(id) - 1;
+                    id = String.valueOf(pageInt);
+                }
+
+                if(id == "1" ) {
+                    params.putString("id", "1");
+                } else {
+                    params.putString("id", id);
+                }
+
                 telaDetalhes.putExtras(params);
-                //abrindo a tela detalhes
+
                 startActivity(telaDetalhes);
             }
         });
@@ -70,13 +80,24 @@ public class MainActivity extends ListActivity {
                     e.printStackTrace();
                 }
                 Intent telaDetalhes = new Intent(MainActivity.this, MainActivity.class);
-
-                //criando os parametros e adicionando os dados do item selecionado
                 Bundle params = new Bundle();
-                params.putString("id", "2");
-                //adicionando os parametros no caminho de tela
+
+
+                if(id != null) {
+                    int pageInt =  Integer.parseInt(id) + 1;
+                    id = String.valueOf( pageInt);
+                }
+
+                if(id == "35" ) {
+                    params.putString("id", "1");
+                } else {
+                    params.putString("id", id);
+                }
+
+                params.putString("id", id);
+
                 telaDetalhes.putExtras(params);
-                //abrindo a tela detalhes
+
                 startActivity(telaDetalhes);
             }
         });
@@ -90,36 +111,38 @@ public class MainActivity extends ListActivity {
         String texto = listaDados.get(0).get("name");
         Toast.makeText(this, texto, Toast.LENGTH_LONG).show();
 
-        //criando o adapter que ir configrar como os dados sao carregados
+
         ListAdapter adapter = new SimpleAdapter(
-                this,                      //contexto que o onjeto esta
-                listaDados,                //local onde estao os dados
-                R.layout.listview_modelo,  //item que servira de modelo para cada celula
-                new String[] { "name" },   //quais campos dos dados serao carregados
-                new int[] { R.id.txtNome } //objetos de tela onde dados vao ser carregados
+                this,
+                listaDados,
+                R.layout.listview_modelo,
+                new String[] { "name" },
+                new int[] { R.id.txtNome }
         );
 
-        //adicionando o adaptador criado na listView da tela
+
         setListAdapter(adapter);
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        //carregando os dados do item selecionado na lista pelo index
+
         HashMap<String, String> personagem =  listaDados.get(position);
 
-        //criando o caminho para abrir a tela de detalhes
+
         Intent telaDetalhes = new Intent(MainActivity.this, DetalhesActivity.class);
 
-        //criando os parametros e adicionando os dados do item selecionado
+
         Bundle params = new Bundle();
         params.putString("name", personagem.get("name"));
         params.putString("imagem", personagem.get("imagem"));
-        //adicionando os parametros no caminho de tela
+        params.putString("status", personagem.get("status"));
+
+
         telaDetalhes.putExtras(params);
 
-        //abrindo a tela detalhes
+
         startActivity(telaDetalhes);
     }
 }

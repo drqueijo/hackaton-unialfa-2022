@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ public class DetalhesActivity extends AppCompatActivity {
     TextView nome;
     TextView status;
     ImageView imagem;
+    Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,5 +39,6 @@ public class DetalhesActivity extends AppCompatActivity {
                 new DownloadImagem(imagem).execute(params.getString("imagem"));
             }
         }
+        btnBack.setOnClickListener(view -> onBackPressed());
     }
 }
