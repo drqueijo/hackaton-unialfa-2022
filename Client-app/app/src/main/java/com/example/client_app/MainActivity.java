@@ -138,7 +138,8 @@ public class MainActivity extends ListActivity {
         params.putString("name", personagem.get("name"));
         params.putString("imagem", personagem.get("imagem"));
         params.putString("status", personagem.get("status"));
-
+        params.putString("species", personagem.get("species"));
+        params.putString("gender", personagem.get("gender"));
 
         telaDetalhes.putExtras(params);
 

@@ -14,6 +14,8 @@ public class DetalhesActivity extends AppCompatActivity {
 
     TextView nome;
     TextView status;
+    TextView species;
+    TextView gender;
     ImageView imagem;
     Button btnBack;
 
@@ -23,8 +25,11 @@ public class DetalhesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalhes);
 
         nome = findViewById(R.id.nome);
+        species = findViewById(R.id.species);
+        gender = findViewById(R.id.gender);
         imagem = findViewById(R.id.imagem);
         status = findViewById(R.id.status);
+        btnBack = findViewById(R.id.btnBack);
 
         //capturando o caminho de tela utilizado para abrir esta tela
         Intent dadosRecebidos = getIntent();
@@ -35,6 +40,8 @@ public class DetalhesActivity extends AppCompatActivity {
                 //adicionando o nome do pokemon no texto da tela
                 nome.setText(params.getString("name"));
                 status.setText(params.getString("status"));
+                species.setText(params.getString("species"));
+                gender.setText(params.getString("gender"));
                 //carregando a imagem da web no objeto imagem da tela
                 new DownloadImagem(imagem).execute(params.getString("imagem"));
             }

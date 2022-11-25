@@ -66,6 +66,8 @@ public class BuscaDadosWeb extends AsyncTask<String, Void, ArrayList<HashMap<Str
                 mapaDados.put("name", item.getString("name"));
                 mapaDados.put("url", item.getString("url"));
                 mapaDados.put("status", item.getString("status"));
+                mapaDados.put("species", item.getString("species"));
+                mapaDados.put("gender", item.getString("gender"));
                 mapaDados.put("imagem", Config.linkImagem + item.getString("id") + ".jpeg");
 
 
