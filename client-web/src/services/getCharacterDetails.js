@@ -14,3 +14,18 @@ export async function getCharacterDetails(id) {
 
     return res
 }
+
+export async function getMultipleCharacters(characters = []) {
+    let res = []
+    try {
+        await Api.get('/character/' + characters.join()).then((response) => {
+            res = response.data
+        }).catch((err) => {
+            console.log(err)
+        })
+    } catch (err) {
+        console.log(err)
+    }
+
+    return res
+}

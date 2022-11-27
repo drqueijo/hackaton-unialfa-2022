@@ -1,72 +1,59 @@
-import React, {useEffect, useState, useRef} from 'react'
-import './Home.css'
-import {getCharacters} from '../../services/getCharacter'
-import CharacterCard from '../../components/CharacterCard/CharacterCard'
-import Button from 'react-bootstrap/Button'
+import React, { useEffect, useState } from 'react'
+import {getMultipleCharacters} from './../../services/getCharacterDetails'
+import "./Home.css"
+import { Carousel } from 'antd'
+import {Link} from 'react-router-dom'
+import { Divider } from 'antd';
+
+
+var charactersNums = [];
+
+while(charactersNums.length < 4){
+    var r = Math.floor(Math.random() * 100) + 1;
+    if(charactersNums.indexOf(r) === -1) charactersNums.push(r);
+}
 
 function Home() {
 
-  const [characters, setCharacters] = useState({
-    results: [],
-    info: {}
-  })
-  const refForm = useRef();
-  const [requestPage, setRequestPage] = useState(1)
-  const apiRequest = async (page, event) => {
-    if(event) event.preventDefault()
-    let params = {
-      page
-    }
-    if(refForm.current[0].value) {
-      params = {
-        ...params,
-        name: refForm.current[0].value
-      }
-    }
-    const response = await getCharacters(params)
-    setCharacters(response)
-    setRequestPage(page)
+  const [characters, setCharacters] = useState([])
+
+  const getCharacters = async () => {
+    const res = await getMultipleCharacters(charactersNums)
+    if(res && res.length === 0) return 
+    setCharacters(res)
   }
 
   useEffect(() => {
-    apiRequest(1)
-  }, [])
-
+    getCharacters()
+  })
   
-
   return (
     <div className="home">
       <section className="home__heading">
         WUBBA LUBBA DUB DUB
+        <p>
+          The Rick and Morty is based on the television show. You will have access to about hundreds of characters, images, locations and episodes. The Rick and Morty API is filled with canonical information as seen on the TV show.
+        </p>
       </section>
-      <section className="home__characters">
-        <form ref={refForm} onSubmit={(e) => apiRequest(1, e)} className="home__characters__search">
-          <input id="search" type='text' className="form-control"  placeholder="Type a character name"/>
-          <Button type="submit" variant="dark">Search</Button>
-        </form>
-        <div className="home__characters__list">
-          {characters.results.map((character) => (
-            <CharacterCard
-              id={character.id}
-              name={character.name}
-              image={character.image}
-              status={character.status}
-              location={character.location.name}
-              gender={character.gender}
-              species={character.species}
-            />
+      <Divider />
+      <section className="home__carousel-head">
+        Know some random characters or <Link to="/list">search one {";)"} </Link>
+      </section>
+      <div className="home__carousel">
+        <Carousel autoplay>
+          {characters && characters.map((char, index) => (
+            <div className={`home__carousel__content index-${index + 1}`}>
+              <img src={char.image} />
+              <info>
+                <h2>{char.name}</h2>
+                <Link to={`/details/${char.id}`}>
+                  Know this character...
+                </Link>
+              </info>
+            </div>
           ))}
-        </div>
-      </section>
-      <div className="home__controls">
-        {characters.info.prev && ( 
-          <Button onClick={() => apiRequest(requestPage - 1)} variant="secondary">Previous page</Button>
-        )}
-        {requestPage}
-        {characters.info.next && ( 
-          <Button onClick={() => apiRequest(requestPage + 1)} variant="light">Next page</Button>
-        )}    
-      </div>
+        </Carousel>
+      </div>     
     </div>
   )
 }
